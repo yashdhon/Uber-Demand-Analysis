@@ -114,6 +114,83 @@ WHERE Status = 'Trip Completed'
 GROUP BY Driver
 
 
+#highest no of bookings in hour 
+
+select rides as hour ,count(rides) as bookings
+from Uber
+group by rides
+order by count(rides)desc
+limit 1
+
+
+
+
+# What is the most common pickup point for cancelled trips?
+select Pickup,count(Pickup) from Uber
+where Status='Cancelled'
+group by Pickup
+order by  count(Pickup) desc
+limit 1
+
+
+#What is the distribution of request statuses by pickup point?
+
+select Pickup,Status,count(Status)
+from Uber
+group by PIckup,Status
+
+# For each driver, how many trips did they complete?
+
+select Driver,count(Driver)
+from Uber
+where Status='Trip Completed'
+group by Driver
+
+# What is the average number of requests per hour of the day?
+select rides as hour,count(*) as bookings
+from Uber
+group by rides
+order by rides
+
+#Driver with highest Cancellations
+select Driver,count(*) as cancellations
+from Uber where Status='Cancelled'
+group by Driver
+order by Driver desc
+
+#How many requests were made each day, and how many were completed?
+select rides as hours,count(*) as total_requests,sum(Status='Trip Completed') as complted
+from Uber
+group by rides
+
+#What percentage of requests were completed for each pickup point?
+select Pickup ,count(*) as requests,round(sum(Status='Trip Completed')*100.0/count(*),2) as percentage_completion
+from Uber group by Pickup
+
+#Which drivers have a high cancellation rate ?
+select Driver,count(*) as total_req,round(sum(Status='Cancelled')*100/count(*),2) as rate_of_cancellation
+from Uber group by Driver
+
+#What are the peak hours for ride requests?
+select Rides as hours,count(*) as rides
+from Uber
+group by Rides
+Order by count(*) desc
+
+#How many requests were made from each pickup point by hour?
+select Pickup,Rides as hour ,count(*) as req from Uber
+group by Pickup,Rides
+
+
+
+
+
+
+
+
+
+
+
 
 
 
